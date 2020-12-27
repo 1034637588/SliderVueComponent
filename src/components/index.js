@@ -3,7 +3,7 @@ import SingleSlider from './SingleSlider'
 const install = function (Vue) {
     // 将组件进行挂载
     Vue.component('DoubleSlider',DoubleSlider)
-    Vue.component('SingleSlider',singleSlider)
+    Vue.component('SingleSlider',SingleSlider)
 }
 if(typeof window !== 'undefined' && window.Vue){
     window.Vue.use(DoubleSlider);
