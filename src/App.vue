@@ -12,13 +12,8 @@
 </template>
 
 <script>
-import DoubleSlider from './components/DoubleSlider.vue'
-
 export default {
-  name: 'App',
-  components: {
-    DoubleSlider
-  }
+  name: 'App'
 }
 </script>
 
