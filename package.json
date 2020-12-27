@@ -1,6 +1,6 @@
 {
   "name": "z-slider-vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "main": "dist/slidervue.umd.min.js",
   "author": {
@@ -9,7 +9,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --inline-vue"
+    "lib": "vue-cli-service build --target lib --inline-vue --entry ./src/components/index.js "
   },
   "dependencies": {
     "core-js": "^3.6.5",

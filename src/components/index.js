@@ -4,7 +4,7 @@ const install = function (Vue) {
     Vue.component('DoubleSlider',DoubleSlider)
 } 
 if(typeof window !== 'undefined' && window.Vue){
-    install(window.Vue)
+    window.Vue.use(DoubleSlider);
 }
 export default {
     install
