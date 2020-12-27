@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div id="app">
    <double-slider>
      <template v-slot:lumpLeft>
@@ -8,15 +8,23 @@
        <div class="slot"></div>
      </template>
    </double-slider>
+   <single-slider></single-slider>
   </div>
 </template>
 
 <script>
 import DoubleSlider from './components/DoubleSlider.vue'
+import SingleSlider from './components/SingleSlider.vue'
 export default {
   name: 'App',
   components: {
+    SingleSlider,
     DoubleSlider
+  },
+  methods:{
+    handle (e) {
+      console.log(e)
+    }
   }
 }
 </script>

@@ -1,13 +1,9 @@
 <template>
 <div class="warpper" :style="{height:`${lumpHeight}px`}">
-  <div class="slider-box" :style="{backgroundColor: centerColor,height:`${height}px`}" ref="sliderBox" @touchstart="handleTouch">
+  <div class="slider-box" :style="{backgroundColor: rightColor,height:`${height}px`}" ref="sliderBox" @touchstart="handleTouch">
     <div
       class="progress-left"
       :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`}"
-    ></div>
-    <div
-      class="progress-right"
-      :style="{ width: `${!lumpRightX ? lumpRightX : totalWidth*prScale + 2}px`, backgroundColor:rightColor, height:`${height}px`}"
     ></div>
     <div
       class="lump-left"
@@ -18,16 +14,6 @@
       ref="lumpLeft"
     >
       <slot name="lumpLeft"></slot>
-    </div>
-    <div
-      class="lump-right"
-      :style="{ transform: `translate(${lumpRightX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`}"
-      @touchstart.stop="handleRightStart"
-      @touchmove="handleRightMove"
-      @touchend="handleRightend"
-      ref="lumpRight"
-    >
-      <slot name="lumpRight"></slot>
     </div>
   </div>
 </div>
@@ -40,29 +26,17 @@ export default {
         type: Number,
         default: 0
       },
-      rightx:{ // 右滑块所在百分比
-        type: Number,
-        default: 1
-      },
       leftMax:{ // 左滑块的右边界
         type: Number,
         default: 1
       },
-      rightMin:{ // 右滑块的左边界
-        type: Number,
-        default: 0
-      },
       leftColor:{ // 左边颜色
         type: String,
-        default: "rgb(245, 245, 245)"
+        default:  "rgb(6,47,109)"
       },
-      rightColor:{  // 右边颜色
+      rightColor:{ // 中间颜色
         type: String,
         default: "rgb(245, 245, 245)"
-      },
-      centerColor:{ // 中间颜色
-        type: String,
-        default: "rgb(6,47,109)"
       },
       height:{ // 高度
         type: Number,
@@ -82,72 +56,42 @@ export default {
       plScale: this.leftx, //进度条距离
       prScale: 1 - this.rightx,
       lumpLeftX: 0,
-      lumpRightX: 0,
       lumpWidth: 0,
       lumpHeight:0,
       totalWidth: 0,
       lumpLeftMax: 0, // 最大右边界 单位px
-      lumpRightMax: 0, // 最大左边界
       boxClientX: 0
     };
   },
   watch: {
     lumpLeftX(newVale) {
-      this.$emit("onChange", [newVale / this.totalWidth, 1 + this.lumpRightX / this.totalWidth])
-    },
-    lumpRightX(newVale) {
-      this.$emit("onChange", [this.lumpLeftX / this.totalWidth, 1 + newVale / this.totalWidth])
+      this.$emit("onChange", newVale / this.totalWidth)
     },
     leftx(newVale){ // 监听参数左边滑块位置 用来参数控制滑块位置
         this.lumpLeftX = this.lumpLeft.endX = Math.min(newVale * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX))
         this.plScale = this.lumpLeftX / this.totalWidth
-    },
-    rightx(newValue){ // 监听参数右边边滑块位置 
-        this.lumpRightX = this.lumpRight.endX =Math.max(newValue * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth))
-        this.prScale =1 + (this.lumpRightX / this.totalWidth)
     }
   },
   created() {
     this.lumpLeft = {
       startX: 0,
       endX: 0,
-    };
-    this.lumpRight = {
-      startX: 0,
-      endX: 0,
-    };
+    }
   },
   mounted() {
     this.lumpWidth = this.$refs.lumpLeft.clientWidth
     this.lumpHeight = this.$refs.lumpLeft.clientHeight
-    this.totalWidth = this.$refs.sliderBox.clientWidth - this.lumpWidth * 2
+    this.totalWidth = this.$refs.sliderBox.clientWidth - this.lumpWidth
     this.lumpLeftMax = this.totalWidth * this.leftMax //初始最大边界为 box总长减去 滑块的宽度
-    this.lumpRightMax = this.totalWidth * (1 - this.rightMin)
     //初始化起始滑块位置
     this.lumpLeftX = this.lumpLeft.endX = this.leftx * this.totalWidth
-    this.lumpRightX = this.lumpRight.endX =  this.rightx * this.totalWidth - this.totalWidth
     this.boxClientX = this.$refs.sliderBox.getBoundingClientRect().left
   },
   methods: {
     handleTouch(e){ // 处理点击移动
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
-        if (X < this.lumpLeftX) { // 点击的左滑块的左边
-             this.lumpLeftX = this.lumpLeft.endX = X + this.lumpWidth * 0.5
-        } else if (X > this.totalWidth + this.lumpRightX) {
-             this.lumpRightX = this.lumpRight.endX = X - this.totalWidth - this.lumpWidth * 0.5
-        } else {
-            let toLeft = X - this.lumpLeftX
-            let toRight = this.totalWidth - X + this.lumpRightX
-            if ( toLeft < toRight ) { // 左边移动
-                this.lumpLeftX =Math.min(this.leftMax * this.totalWidth, this.lumpLeftX + toLeft + this.lumpWidth * 0.5)
-                this.lumpLeft.endX = this.lumpLeftX
-            } else { // 右边移动
-                this.lumpRightX =Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpRightX - (toRight + this.lumpWidth * 0.5))
-                this.lumpRight.endX = this.lumpRightX 
-            }
-        }
+        this.lumpLeftX = this.lumpLeft.endX =Math.min( this.leftMax * this.totalWidth, X + this.lumpWidth * 0.5 )
         this.plScale = this.lumpLeftX / this.totalWidth
-        this.prScale = -this.lumpRightX / this.totalWidth
     },
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起
     handleLeftStart(e) {
@@ -171,32 +115,11 @@ export default {
     },
     handleLeftend(e) {
       this.lumpLeft.endX = this.lumpLeftX;
-    },
-    handleRightStart(e) {
-      this.lumpRight.startX = e.changedTouches[0].clientX;
-    },
-    handleRightMove(e) {
-      let { clientX } = e.changedTouches[0];
-      let { startX, endX } = this.lumpRight;
-      if (
-        this.lumpLeftX - this.lumpRightX >= this.totalWidth &&
-        clientX - startX < 0
-      ) {
-        this.lumpRightX = this.lumpLeftX - this.totalWidth;
-        return;
-      } //如果碰到右边滑块 就停下
-      this.lumpRightX = Math.min(
-        0,
-        Math.max(clientX - startX + endX, -this.lumpRightMax) // 如果超过了左边界 就不能动了
-      );
-      this.prScale = -(this.lumpRightX / this.totalWidth).toFixed(3);
-    },
-    handleRightend(e) {
-      this.lumpRight.endX = this.lumpRightX; // 记录最后停止后滑动的距离
-    },
+    }
   },
 };
 </script>
+
 <style scoped lang="less">
 .warpper{
   display: flex;
@@ -217,8 +140,7 @@ export default {
     background-color: rgb(245, 245, 245);
     transform-origin: left;
     height: 100%;
-    border-top-left-radius: 1000px;
-    border-bottom-left-radius: 1000px;
+    border-radius: 1000px;
   }
   .progress-right {
     position: absolute;
@@ -226,10 +148,10 @@ export default {
     top: 0;
     width: 100%;
     transform-origin: right;
-    border-top-right-radius: 1000px;
-    border-bottom-right-radius: 1000px;
     background-color: rgb(245, 245, 245);
     height: 100%;
+    border-top-left-radius: 1000px;
+    border-bottom-left-radius: 1000px;
   }
   .lump-left {
     transform: translateY(-50%);
