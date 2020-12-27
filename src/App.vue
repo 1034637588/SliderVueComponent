@@ -1,28 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+   <double-slider>
+     <template v-slot:lumpLeft>
+       <div class="slot"></div>
+     </template>
+     <template v-slot:lumpRight>
+       <div class="slot"></div>
+     </template>
+   </double-slider>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DoubleSlider from './components/DoubleSlider.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    DoubleSlider
   }
 }
 </script>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html,body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+#app{ 
+}
+.slot{
+  width: 10px;
+  height: 10px;
+  background-color: salmon;
 }
 </style>
