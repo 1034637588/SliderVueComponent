@@ -5,7 +5,7 @@
       <h1>{{(150*value[1]).toFixed(0)}}</h1>
     </div>
     <div class="box">
-        <double-slider @onChange="onChange"/>
+        <double-slider @onChange="onChange" :interval="0.1"/>
     </div>
     <div class="input">
       <h1>{{(150*value2).toFixed(0)}}</h1>
@@ -28,7 +28,7 @@ export default {
  data(){
     return{
       value:[0,1],
-      value2:0
+      value2:0,
     }
   },
   methods:{

@@ -75,6 +75,10 @@ export default {
       heightLump:{ //滑块高度
         type: Number,
         default: 30
+      },
+      interval:{ // 最小间隔距离
+        type: Number,
+        default: 0
       }
   },
   data() {
@@ -161,10 +165,10 @@ export default {
       let { clientX } = e.changedTouches[0];
       let { startX, endX } = this.lumpLeft;
       if (
-        this.lumpLeftX - this.lumpRightX >= this.totalWidth &&
+        this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
         clientX - startX > 0
       ) {
-        this.lumpLeftX = this.totalWidth + this.lumpRightX;
+        this.lumpLeftX = this.totalWidth + this.lumpRightX  - this.interval * this.totalWidth;
         return;
       } //如果碰到右边滑块 就停下
       this.lumpLeftX = Math.min(
@@ -184,10 +188,10 @@ export default {
       let { clientX } = e.changedTouches[0];
       let { startX, endX } = this.lumpRight;
       if (
-        this.lumpLeftX - this.lumpRightX >= this.totalWidth &&
+        this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
         clientX - startX < 0
       ) {
-        this.lumpRightX = this.lumpLeftX - this.totalWidth;
+        this.lumpRightX = this.lumpLeftX - this.totalWidth + this.interval * this.totalWidth;
         return;
       } //如果碰到右边滑块 就停下
       this.lumpRightX = Math.min(
