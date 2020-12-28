@@ -1,14 +1,12 @@
- <template>
-  <div id="app">
-   <double-slider>
-     <template v-slot:lumpLeft>
-       <div class="slot"></div>
-     </template>
-     <template v-slot:lumpRight>
-       <div class="slot"></div>
-     </template>
-   </double-slider>
-   <single-slider></single-slider>
+<template>
+  <div class="home">
+    <div class="input">
+      <h1>{{(150*value[0]).toFixed(0)}}</h1>
+      <h1>{{(150*value[1]).toFixed(0)}}</h1>
+    </div>
+    <div class="box">
+        <double-slider @onChange="onChange"/>
+    </div>
   </div>
 </template>
 
@@ -21,26 +19,36 @@ export default {
     SingleSlider,
     DoubleSlider
   },
+ data(){
+    return{
+      value:[0,1]
+    }
+  },
   methods:{
-    handle (e) {
+    onChange (e) {
       console.log(e)
+      this.value = e
     }
   }
 }
 </script>
 
-<style lang="less">
-html,body{
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-#app{ 
-}
-.slot{
-  width: 10px;
-  height: 10px;
-  background-color: salmon;
-}
+<style lang="less" scoped>
+ .home{
+   background-color: darkgray;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-flow: column;
+   align-items: center;
+   justify-content: center;
+ }
+ .box,.input{
+   width: 60vw;
+ }
+ .input{
+   display: flex;
+   justify-content: space-between;
+ }
 </style>
+

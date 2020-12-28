@@ -135,9 +135,9 @@ export default {
         this.isClick = true
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
         if (X < this.lumpLeftX) { // 点击的左滑块的左边
-             this.lumpLeftX = this.lumpLeft.endX = X + this.lumpWidth * 0.5
+             this.lumpLeftX = this.lumpLeft.endX = Math.max(0,X + this.lumpWidth * 0.5)
         } else if (X > this.totalWidth + this.lumpRightX) {
-             this.lumpRightX = this.lumpRight.endX = X - this.totalWidth - this.lumpWidth * 0.5
+             this.lumpRightX = this.lumpRight.endX = Math.min(X - this.totalWidth - this.lumpWidth * 0.5,0)
         } else {
             let toLeft = X - this.lumpLeftX
             let toRight = this.totalWidth - X + this.lumpRightX
