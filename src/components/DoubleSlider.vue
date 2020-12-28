@@ -95,7 +95,7 @@ export default {
       boxClientX: 0,
       transition:'all 0.2s',
       isClick:false
-    };
+    }
   },
   watch: {
     lumpLeftX(newVale) {
@@ -117,11 +117,11 @@ export default {
     this.lumpLeft = {
       startX: 0,
       endX: 0,
-    };
+    }
     this.lumpRight = {
       startX: 0,
       endX: 0,
-    };
+    }
   },
   mounted() {
     this.lumpWidth = this.$refs.lumpLeft.clientWidth
@@ -179,52 +179,52 @@ export default {
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起
     handleLeftStart(e) {
       this.isClick = false
-      this.lumpLeft.startX = e.changedTouches[0].clientX;
+      this.lumpLeft.startX = e.changedTouches[0].clientX
     },
     handleLeftMove(e) {
-      let { clientX } = e.changedTouches[0];
-      let { startX, endX } = this.lumpLeft;
+      let { clientX } = e.changedTouches[0]
+      let { startX, endX } = this.lumpLeft
       if (
         this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
         clientX - startX > 0
       ) {
-        this.lumpLeftX = this.totalWidth + this.lumpRightX  - this.interval * this.totalWidth;
+        this.lumpLeftX = this.totalWidth + this.lumpRightX  - this.interval * this.totalWidth
         return;
       } //如果碰到右边滑块 就停下
       this.lumpLeftX = Math.min(
         Math.max(clientX - startX + endX, 0),
         this.lumpLeftMax
-      ); // 实时改变滑块位置
-      this.plScale = this.lumpLeftX / this.totalWidth;
+      ) // 实时改变滑块位置
+      this.plScale = this.lumpLeftX / this.totalWidth
     },
     handleLeftend(e) {
-      this.lumpLeft.endX = this.lumpLeftX;
+      this.lumpLeft.endX = this.lumpLeftX
     },
     handleRightStart(e) {
       this.isClick = false
-      this.lumpRight.startX = e.changedTouches[0].clientX;
+      this.lumpRight.startX = e.changedTouches[0].clientX
     },
     handleRightMove(e) {
-      let { clientX } = e.changedTouches[0];
-      let { startX, endX } = this.lumpRight;
+      let { clientX } = e.changedTouches[0]
+      let { startX, endX } = this.lumpRight
       if (
         this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
         clientX - startX < 0
       ) {
-        this.lumpRightX = this.lumpLeftX - this.totalWidth + this.interval * this.totalWidth;
-        return;
+        this.lumpRightX = this.lumpLeftX - this.totalWidth + this.interval * this.totalWidth
+        return
       } //如果碰到右边滑块 就停下
       this.lumpRightX = Math.min(
         0,
         Math.max(clientX - startX + endX, -this.lumpRightMax) // 如果超过了左边界 就不能动了
-      );
-      this.prScale = -(this.lumpRightX / this.totalWidth).toFixed(3);
+      )
+      this.prScale = -(this.lumpRightX / this.totalWidth).toFixed(3)
     },
     handleRightend(e) {
-      this.lumpRight.endX = this.lumpRightX; // 记录最后停止后滑动的距离
+      this.lumpRight.endX = this.lumpRightX // 记录最后停止后滑动的距离
     },
   },
-};
+}
 </script>
 <style scoped lang="less">
 .warpper{

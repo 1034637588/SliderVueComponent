@@ -98,30 +98,30 @@ export default {
     },
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起
     handleLeftStart(e) {
-      this.lumpLeft.startX = e.changedTouches[0].clientX;
+      this.lumpLeft.startX = e.changedTouches[0].clientX
       this.isClick = false
     },
     handleLeftMove(e) {
-      let { clientX } = e.changedTouches[0];
-      let { startX, endX } = this.lumpLeft;
+      let { clientX } = e.changedTouches[0]
+      let { startX, endX } = this.lumpLeft
       if (
         this.lumpLeftX - this.lumpRightX >= this.totalWidth &&
         clientX - startX > 0
       ) {
-        this.lumpLeftX = this.totalWidth + this.lumpRightX;
-        return;
+        this.lumpLeftX = this.totalWidth + this.lumpRightX
+        return
       } //如果碰到右边滑块 就停下
       this.lumpLeftX = Math.min(
         Math.max(clientX - startX + endX, 0),
         this.lumpLeftMax
-      ); // 实时改变滑块位置
-      this.plScale = this.lumpLeftX / this.totalWidth;
+      ) // 实时改变滑块位置
+      this.plScale = this.lumpLeftX / this.totalWidth
     },
     handleLeftend(e) {
-      this.lumpLeft.endX = this.lumpLeftX;
+      this.lumpLeft.endX = this.lumpLeftX
     }
   },
-};
+}
 </script>
 
 <style scoped lang="less">
