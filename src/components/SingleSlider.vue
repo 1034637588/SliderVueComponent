@@ -3,11 +3,11 @@
   <div class="slider-box" :style="{backgroundColor: rightColor,height:`${height}px`}" ref="sliderBox" @touchstart="handleTouch">
     <div
       class="progress-left"
-      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`}"
+      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`, transition:isClick ? transition : ''}"
     ></div>
     <div
       class="lump-left"
-      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`}"
+      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,  transition:isClick ? transition : ''}"
       @touchstart.stop="handleLeftStart"
       @touchmove="handleLeftMove"
       @touchend="handleLeftend"
@@ -60,8 +60,10 @@ export default {
       lumpHeight:0,
       totalWidth: 0,
       lumpLeftMax: 0, // 最大右边界 单位px
-      boxClientX: 0
-    };
+      boxClientX: 0,
+      transition: "all 0.2s",
+      isClick:false
+      };
   },
   watch: {
     lumpLeftX(newVale) {
@@ -89,6 +91,7 @@ export default {
   },
   methods: {
     handleTouch(e){ // 处理点击移动
+        this.isClick = true
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
         this.lumpLeftX = this.lumpLeft.endX =Math.min( this.leftMax * this.totalWidth, X + this.lumpWidth * 0.5 )
         this.plScale = this.lumpLeftX / this.totalWidth
@@ -96,6 +99,7 @@ export default {
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起
     handleLeftStart(e) {
       this.lumpLeft.startX = e.changedTouches[0].clientX;
+      this.isClick = false
     },
     handleLeftMove(e) {
       let { clientX } = e.changedTouches[0];
@@ -142,34 +146,10 @@ export default {
     height: 100%;
     border-radius: 1000px;
   }
-  .progress-right {
-    position: absolute;
-    right: -1px;
-    top: 0;
-    width: 100%;
-    transform-origin: right;
-    background-color: rgb(245, 245, 245);
-    height: 100%;
-    border-top-left-radius: 1000px;
-    border-bottom-left-radius: 1000px;
-  }
   .lump-left {
     transform: translateY(-50%);
     position: absolute;
     left: 0;
-    top: 50%;
-    width: 30px;
-    height: 30px;
-    background-color: black;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .lump-right {
-    transform: translateY(50px);
-    position: absolute;
-    right: 0;
     top: 50%;
     width: 30px;
     height: 30px;

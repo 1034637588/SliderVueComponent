@@ -3,15 +3,15 @@
   <div class="slider-box" :style="{backgroundColor: centerColor,height:`${height}px`}" ref="sliderBox" @touchstart="handleTouch">
     <div
       class="progress-left"
-      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`}"
+      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`,transition:isClick ? transition : ''}"
     ></div>
     <div
       class="progress-right"
-      :style="{ width: `${!lumpRightX ? lumpRightX : totalWidth*prScale + 2}px`, backgroundColor:rightColor, height:`${height}px`}"
+      :style="{ width: `${!lumpRightX ? lumpRightX : totalWidth*prScale + 2}px`, backgroundColor:rightColor, height:`${height}px`,transition:isClick ? transition : ''}"
     ></div>
     <div
       class="lump-left"
-      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`}"
+      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,transition:isClick ? transition : ''}"
       @touchstart.stop="handleLeftStart"
       @touchmove="handleLeftMove"
       @touchend="handleLeftend"
@@ -21,7 +21,7 @@
     </div>
     <div
       class="lump-right"
-      :style="{ transform: `translate(${lumpRightX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`}"
+      :style="{ transform: `translate(${lumpRightX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,transition:isClick ? transition : ''}"
       @touchstart.stop="handleRightStart"
       @touchmove="handleRightMove"
       @touchend="handleRightend"
@@ -88,7 +88,8 @@ export default {
       totalWidth: 0,
       lumpLeftMax: 0, // 最大右边界 单位px
       lumpRightMax: 0, // 最大左边界
-      boxClientX: 0
+      boxClientX: 0,
+      transition:'all 0.2s'
     };
   },
   watch: {
@@ -130,6 +131,7 @@ export default {
   },
   methods: {
     handleTouch(e){ // 处理点击移动
+        this.isClick = true
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
         if (X < this.lumpLeftX) { // 点击的左滑块的左边
              this.lumpLeftX = this.lumpLeft.endX = X + this.lumpWidth * 0.5
@@ -151,6 +153,7 @@ export default {
     },
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起
     handleLeftStart(e) {
+      this.isClick = false
       this.lumpLeft.startX = e.changedTouches[0].clientX;
     },
     handleLeftMove(e) {
@@ -173,6 +176,7 @@ export default {
       this.lumpLeft.endX = this.lumpLeftX;
     },
     handleRightStart(e) {
+      this.isClick = false
       this.lumpRight.startX = e.changedTouches[0].clientX;
     },
     handleRightMove(e) {
