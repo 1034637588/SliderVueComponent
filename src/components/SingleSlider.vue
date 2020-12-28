@@ -128,7 +128,9 @@ export default {
 .warpper{
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 0 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .slider-box {
   width: 100%;

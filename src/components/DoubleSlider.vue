@@ -89,7 +89,8 @@ export default {
       lumpLeftMax: 0, // 最大右边界 单位px
       lumpRightMax: 0, // 最大左边界
       boxClientX: 0,
-      transition:'all 0.2s'
+      transition:'all 0.2s',
+      isClick:false
     };
   },
   watch: {
@@ -205,7 +206,9 @@ export default {
 .warpper{
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 0 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .slider-box {
   width: 100%;
