@@ -105,12 +105,13 @@ export default {
       this.$emit("onChange", [this.lumpLeftX / this.totalWidth, 1 + newVale / this.totalWidth])
     },
     leftx(newVale){ // 监听参数左边滑块位置 用来参数控制滑块位置
-        this.lumpLeftX = this.lumpLeft.endX = Math.min(newVale * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX))
+        this.lumpLeftX = this.lumpLeft.endX = Math.min(newVale * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX - this.interval * this.totalWidth))
         this.plScale = this.lumpLeftX / this.totalWidth
     },
     rightx(newValue){ // 监听参数右边边滑块位置 
-        this.lumpRightX = this.lumpRight.endX =Math.max(newValue * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth))
-        this.prScale =1 + (this.lumpRightX / this.totalWidth)
+        this.lumpRightX = this.lumpRight.endX =Math.max(newValue * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth,this.lumpLeftX + this.interval * this.totalWidth - this.totalWidth))
+        this.prScale =-(this.lumpRightX / this.totalWidth)
+        console.log(this.lumpRightX / this.totalWidth)
     }
   },
   created() {
