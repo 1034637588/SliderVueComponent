@@ -71,6 +71,10 @@ Vue.use(Slider)
       heightLump:{ //滑块高度
         type: Number,
         default: 30
+      }，
+      interval:{ // 最小间隔距离
+        type: Number,
+        default: 0
       }
 ```
 ### 6.单滑块配置参数
