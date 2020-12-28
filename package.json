@@ -4,7 +4,7 @@
   "private": false,
   "main": "dist/z-slider-vue.umd.min.js",
   "author": {
-    "name":"周林阳"
+    "name": "周林阳"
   },
   "scripts": {
     "serve": "vue-cli-service serve",

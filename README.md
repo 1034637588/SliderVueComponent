@@ -19,6 +19,15 @@ Vue.use(Slider)
       @onChange="handlerChange" //监听更新的数据
       />
       <single-slider/>
+
+      <double-slider>
+      <!-- 自定义左滑块 -->
+      <template v-slot:lumpLeft>
+      </template>
+      <!-- 自定义右滑块 -->
+      <template v-slot:lumpRight>
+      </template>
+     </double-slider>
 ```
 ### 5.双滑快配置参数
 参数中与位置相关的均为百分比 值为0-1 0为最左边 1为最右边
