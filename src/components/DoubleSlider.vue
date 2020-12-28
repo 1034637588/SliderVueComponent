@@ -140,15 +140,25 @@ export default {
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
         if (X < this.lumpLeftX) { // 点击的左滑块的左边
              this.lumpLeftX = this.lumpLeft.endX = Math.max(0,X + this.lumpWidth * 0.5)
-        } else if (X > this.totalWidth + this.lumpRightX) {
+        } else if (X > this.totalWidth + this.lumpRightX) { // 点击的右滑块的右边
              this.lumpRightX = this.lumpRight.endX = Math.min(X - this.totalWidth - this.lumpWidth * 0.5,0)
         } else {
             let toLeft = X - this.lumpLeftX
             let toRight = this.totalWidth - X + this.lumpRightX
-            if ( toLeft < toRight ) { // 左边移动
+            if ( toLeft < toRight) { // 左边移动
+                if(X + this.interval * this.totalWidth >= this.lumpRightX + this.totalWidth - this.lumpWidth) { // 控制左边移动时不能超过间距
+                  this.lumpLeftX = this.lumpLeft.endX = this.lumpRightX - this.interval * this.totalWidth + this.totalWidth
+                  this.plScale = this.lumpLeftX / this.totalWidth
+                  return
+                }
                 this.lumpLeftX =Math.min(this.leftMax * this.totalWidth, this.lumpLeftX + toLeft + this.lumpWidth * 0.5)
                 this.lumpLeft.endX = this.lumpLeftX
             } else { // 右边移动
+                if(X - this.interval * this.totalWidth <= this.lumpLeftX + this.lumpWidth) { // 控制右边移动时不能超过间距
+                  this.lumpRightX = this.lumpRight.endX = -(this.totalWidth - this.lumpLeftX - this.interval * this.totalWidth)
+                  this.prScale = -this.lumpRightX / this.totalWidth
+                  return
+                }
                 this.lumpRightX =Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpRightX - (toRight + this.lumpWidth * 0.5))
                 this.lumpRight.endX = this.lumpRightX 
             }
