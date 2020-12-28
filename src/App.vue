@@ -29,7 +29,7 @@ export default {
     return{
       value:[0,1],
       value2:0,
-      leftx:0,
+      leftx:1,
       rightx:1
     }
   },

@@ -111,7 +111,6 @@ export default {
     rightx(newValue){ // 监听参数右边边滑块位置 
         this.lumpRightX = this.lumpRight.endX =Math.max(newValue * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth,this.lumpLeftX + this.interval * this.totalWidth - this.totalWidth))
         this.prScale =-(this.lumpRightX / this.totalWidth)
-        console.log(this.lumpRightX / this.totalWidth)
     }
   },
   created() {
@@ -134,8 +133,18 @@ export default {
     this.lumpLeftX = this.lumpLeft.endX = this.leftx * this.totalWidth
     this.lumpRightX = this.lumpRight.endX =  this.rightx * this.totalWidth - this.totalWidth
     this.boxClientX = this.$refs.sliderBox.getBoundingClientRect().left
+    this.handInitLeft()
+    this.handleInitRight()
   },
   methods: {
+    handInitLeft(){
+      this.lumpLeftX = this.lumpLeft.endX = Math.min(this.leftx * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX - this.interval * this.totalWidth))
+      this.plScale = this.lumpLeftX / this.totalWidth
+    },
+    handleInitRight(){
+      this.lumpRightX = this.lumpRight.endX =Math.max(this.rightx * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth,this.lumpLeftX + this.interval * this.totalWidth - this.totalWidth))
+      this.prScale =-(this.lumpRightX / this.totalWidth)
+    },
     handleTouch(e){ // 处理点击移动
         this.isClick = true
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
