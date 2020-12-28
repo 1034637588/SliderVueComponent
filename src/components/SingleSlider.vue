@@ -93,7 +93,7 @@ export default {
     handleTouch(e){ // 处理点击移动
         this.isClick = true
         let X = e.changedTouches[0].clientX - this.boxClientX - this.lumpWidth//当前点击的位置
-        this.lumpLeftX = this.lumpLeft.endX =Math.min( this.leftMax * this.totalWidth, X + this.lumpWidth * 0.5 )
+        this.lumpLeftX = this.lumpLeft.endX =Math.min( this.leftMax * this.totalWidth, Math.max(0,X + this.lumpWidth * 0.5) )
         this.plScale = this.lumpLeftX / this.totalWidth
     },
     // 左滑块滑动的范围从左边界算起 右滑块从右边界算起

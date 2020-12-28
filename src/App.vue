@@ -7,6 +7,12 @@
     <div class="box">
         <double-slider @onChange="onChange"/>
     </div>
+    <div class="input">
+      <h1>{{(150*value2).toFixed(0)}}</h1>
+    </div>
+    <div class="box">
+        <single-slider @onChange="onChangeSingle"/>
+    </div>
   </div>
 </template>
 
@@ -21,13 +27,17 @@ export default {
   },
  data(){
     return{
-      value:[0,1]
+      value:[0,1],
+      value2:0
     }
   },
   methods:{
     onChange (e) {
       console.log(e)
       this.value = e
+    },
+    onChangeSingle (e) {
+      this.value2 = e
     }
   }
 }
