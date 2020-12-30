@@ -203,6 +203,7 @@ export default {
     },
     handleLeftend(e) {
       this.lumpLeft.endX = this.lumpLeftX
+      this.$emit('leftMoveEnd',this.lumpLeftX / this.totalWidth)
     },
     handleRightStart(e) {
       this.isClick = false
@@ -226,6 +227,7 @@ export default {
     },
     handleRightend(e) {
       this.lumpRight.endX = this.lumpRightX // 记录最后停止后滑动的距离
+      this.$emit('rightMoveEnd',1 + this.lumpRightX / this.totalWidth)
     },
   },
 }

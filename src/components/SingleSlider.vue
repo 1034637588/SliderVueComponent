@@ -123,6 +123,7 @@ export default {
     },
     handleLeftend(e) {
       this.lumpLeft.endX = this.lumpLeftX
+      this.$emit('leftMoveEnd',this.lumpLeftX / this.totalWidth)
     }
   },
 }

@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <div class="input">
-      <h1>{{(150*value[0]).toFixed(0)}}</h1>
+      <input v-model="inputValue" @blur="handleBlur(inputValue)" type="number"/>
       <h1>{{(150*value[1]).toFixed(0)}}</h1>
     </div>
     <div class="box">
-        <double-slider @onChange="onChange" :interval="0.1" :leftx="leftx" :rightx="rightx"/>
+        <double-slider @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
     </div>
     <div class="input">
       <h1>{{(150*value2).toFixed(0)}}</h1>
@@ -29,18 +29,25 @@ export default {
     return{
       value:[0,1],
       value2:0,
-      leftx:1,
-      rightx:1
+      leftx:0,
+      rightx:1,
+      inputValue:0
     }
+  },
+  watch:{
+    
   },
   methods:{
     onChange (e) {
-      console.log(e)
       this.value = e
     },
     onChangeSingle (e) {
       this.value2 = e
+    },
+    handleBlur (va) {
+      this.leftx = va / 150
     }
+
   }
 }
 </script>
