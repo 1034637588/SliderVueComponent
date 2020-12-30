@@ -72,6 +72,10 @@ Vue.use(Slider)
         type: Number,
         default: 30
       }，
+      LumpColor:{
+        type: String,
+        default: "#000"
+      },
       interval:{ // 最小间隔距离
         type: Number,
         default: 0
@@ -95,6 +99,10 @@ Vue.use(Slider)
       rightColor:{ // 中间颜色
         type: String,
         default: "rgb(245, 245, 245)"
+      },
+      LumpColor:{
+        type: String,
+        default: "#000"
       },
       height:{ // 高度
         type: Number,

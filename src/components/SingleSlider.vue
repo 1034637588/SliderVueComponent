@@ -7,7 +7,7 @@
     ></div>
     <div
       class="lump-left"
-      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,  transition:isClick ? transition : ''}"
+      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,backgroundColor:LumpColor,transition:isClick ? transition : ''}"
       @touchstart.stop="handleLeftStart"
       @touchmove="handleLeftMove"
       @touchend="handleLeftend"
@@ -49,7 +49,11 @@ export default {
       heightLump:{ //滑块高度
         type: Number,
         default: 30
-      }
+      },
+      LumpColor:{
+        type: String,
+        default: "#000"
+      },
   },
   data() {
     return {
