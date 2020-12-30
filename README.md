@@ -117,6 +117,7 @@ Vue.use(Slider)
         default: 30
       }
 ```
+### 7.事件
 监听均使用onChange事件：
 
 双滑块返回 Array[Number,Number] ,
@@ -124,4 +125,9 @@ Array[0] 左边位置 （0-1）即为当前滑动百分比
 Array[1] 右边位置 （0-1）即为当前滑动百分比
 
 单滑块只返回一个Number 也是当前百分比
+
+左滑块滑动结束事件 leftMoveEnd,参数为当前滑动百分比
+右滑块滑动结束事件 rightMoveEnd,参数为当前滑动百分比
+
+
 
