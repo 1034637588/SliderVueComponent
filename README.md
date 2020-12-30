@@ -72,7 +72,7 @@ Vue.use(Slider)
         type: Number,
         default: 30
       }，
-      LumpColor:{
+      lumpColor:{
         type: String,
         default: "#000"
       },
@@ -100,7 +100,7 @@ Vue.use(Slider)
         type: String,
         default: "rgb(245, 245, 245)"
       },
-      LumpColor:{
+      lumpColor:{
         type: String,
         default: "#000"
       },

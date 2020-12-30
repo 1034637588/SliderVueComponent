@@ -11,7 +11,7 @@
     ></div>
     <div
       class="lump-left"
-      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,backgroundColor:LumpColor,transition:isClick ? transition : ''}"
+      :style="{ transform: `translate(${lumpLeftX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,backgroundColor:lumpColor,transition:isClick ? transition : ''}"
       @touchstart.stop="handleLeftStart"
       @touchmove="handleLeftMove"
       @touchend="handleLeftend"
@@ -21,7 +21,7 @@
     </div>
     <div
       class="lump-right"
-      :style="{ transform: `translate(${lumpRightX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,backgroundColor:LumpColor,transition:isClick ? transition : ''}"
+      :style="{ transform: `translate(${lumpRightX}px,-50%)`, width:`${widthLump}px`, height:`${heightLump}px`,backgroundColor:lumpColor,transition:isClick ? transition : ''}"
       @touchstart.stop="handleRightStart"
       @touchmove="handleRightMove"
       @touchend="handleRightend"
@@ -76,7 +76,7 @@ export default {
         type: Number,
         default: 30
       },
-      LumpColor:{
+      lumpColor:{
         type: String,
         default: "#000"
       },
