@@ -79,6 +79,10 @@ Vue.use(Slider)
       interval:{ // 最小间隔距离
         type: Number,
         default: 0
+      },
+      transitionTime: {
+        type: Number,
+        default: 0.2
       }
 ```
 ### 6.单滑块配置参数
@@ -115,6 +119,10 @@ Vue.use(Slider)
       heightLump:{ //滑块高度
         type: Number,
         default: 30
+      },
+      transitionTime: {
+        type: Number,
+        default: 0.2
       }
 ```
 ### 7.事件

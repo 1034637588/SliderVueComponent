@@ -54,6 +54,10 @@ export default {
         type: String,
         default: "#000"
       },
+      transitionTime: {
+        type: Number,
+        default: 0.2
+      }
   },
   data() {
     return {
@@ -65,7 +69,7 @@ export default {
       totalWidth: 0,
       lumpLeftMax: 0, // 最大右边界 单位px
       boxClientX: 0,
-      transition: "all 0.2s",
+      transition:`all ${this.transitionTime}s`,
       isClick:false
       };
   },
@@ -74,6 +78,7 @@ export default {
       this.$emit("onChange", newVale / this.totalWidth)
     },
     leftx(newVale){ // 监听参数左边滑块位置 用来参数控制滑块位置
+        this.isClick = true
         this.lumpLeftX = this.lumpLeft.endX = Math.min(newVale * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX))
         this.plScale = this.lumpLeftX / this.totalWidth
     }

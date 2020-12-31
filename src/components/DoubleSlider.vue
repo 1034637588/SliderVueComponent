@@ -83,7 +83,12 @@ export default {
       interval:{ // 最小间隔距离
         type: Number,
         default: 0
+      },
+      transitionTime: {
+        type: Number,
+        default: 0.2
       }
+
   },
   data() {
     return {
@@ -97,7 +102,7 @@ export default {
       lumpLeftMax: 0, // 最大右边界 单位px
       lumpRightMax: 0, // 最大左边界
       boxClientX: 0,
-      transition:'all 0.2s',
+      transition:`all ${this.transitionTime}s`,
       isClick:false
     }
   },
@@ -109,10 +114,12 @@ export default {
       this.$emit("onChange", [this.lumpLeftX / this.totalWidth, 1 + newVale / this.totalWidth])
     },
     leftx(newVale){ // 监听参数左边滑块位置 用来参数控制滑块位置
+        this.isClick = true
         this.lumpLeftX = this.lumpLeft.endX = Math.min(newVale * this.totalWidth,Math.min(this.leftMax * this.totalWidth,this.totalWidth + this.lumpRightX - this.interval * this.totalWidth))
         this.plScale = this.lumpLeftX / this.totalWidth
     },
     rightx(newValue){ // 监听参数右边边滑块位置 
+        this.isClick = true
         this.lumpRightX = this.lumpRight.endX =Math.max(newValue * this.totalWidth - this.totalWidth,Math.max( -(1 - this.rightMin) * this.totalWidth,this.lumpLeftX - this.totalWidth,this.lumpLeftX + this.interval * this.totalWidth - this.totalWidth))
         this.prScale =-(this.lumpRightX / this.totalWidth)
     }

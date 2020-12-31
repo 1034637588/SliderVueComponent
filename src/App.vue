@@ -39,6 +39,7 @@ export default {
   },
   methods:{
     leftMoveEnd(e){
+      this.leftx = e
       console.log(e)
     },
     onChange (e) {
