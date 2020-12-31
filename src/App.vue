@@ -5,7 +5,7 @@
       <h1>{{(150*value[1]).toFixed(0)}}</h1>
     </div>
     <div class="box">
-        <double-slider @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
+        <double-slider @leftMoveEnd="leftMoveEnd" @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
     </div>
     <div class="input">
       <h1>{{(150*value2).toFixed(0)}}</h1>
@@ -38,6 +38,9 @@ export default {
     
   },
   methods:{
+    leftMoveEnd(e){
+      console.log(e)
+    },
     onChange (e) {
       this.value = e
     },
