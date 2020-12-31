@@ -1,6 +1,6 @@
 {
   "name": "z-slider-vue",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "private": false,
   "main": "dist/z-slider-vue.umd.min.js",
   "author": {
