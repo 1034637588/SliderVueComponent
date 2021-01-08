@@ -139,3 +139,176 @@ Array[1] 右边位置 （0-1）即为当前滑动百分比
 
 
 
+### 组件二次封装代码实现：
+
+```javascript
+<template>
+  <div class="calculate-slider">
+      <div class="slider-title">
+        <p class="title">{{ title1 }}</p>
+        <p class="title">{{ title2 }}</p>
+      </div>
+      <div class="input-box">
+        <input 
+          class="slider-input" 
+          v-model="inputValueLeft" 
+          type="text"
+          @blur="handleBlurLeft(inputValueLeft)" />
+        <input 
+          class="slider-input"
+          v-model="inputValueRight"
+          type="text"
+          @blur="handleBlurRight(inputValueRight)"  />
+      </div>
+    <double-slider 
+      lumpColor="#fff"
+      :leftMax="leftMax"
+      :rightMin="rightMin"
+      :interval="interval"
+      :leftx="leftx"
+      :rightx="rightx"
+      @onChange="sliderChange"
+      @leftMoveEnd="leftMoveEnd"
+      @rightMoveEnd="rightMoveEnd"
+      >
+        <template v-slot:lumpLeft>
+          <img class="image" src="@/assets/Controller_handle@2x.png" />
+        </template>
+        <template v-slot:lumpRight>
+          <img class="image" src="@/assets/Controller_handle@2x.png" />
+        </template>
+    </double-slider>
+  </div>
+</template>
+<script>
+export default {
+    data () {
+      return {
+        leftMax: this.dotOptions[0].max / this.sliderMaxValue,
+        rightMin: this.dotOptions[1].min / this.sliderMaxValue,
+        interval: this.minRange / this.sliderMaxValue,
+        leftx:this.value[0] / this.sliderMaxValue,
+        rightx:this.value[1] / this.sliderMaxValue,
+        inputValueLeft: this.value[0], // 输入框双向数据绑定
+        inputValueRight: this.value[1],
+      }
+    },
+    props: {
+        value: { // 数据绑定返回值
+        type: Array,
+        default: () => [0, 100]
+        },
+        title1: {
+        type: String,
+        default: 'title1'
+        },
+        title2: {
+        type: String,
+        default: 'title2'
+        },
+        sliderMaxValue: {
+        type: Number,
+        default: 100
+        },
+        sliderMinValue: {
+        type: Number,
+        default: 0
+        },
+        minRange: { // 最小步长
+        type: Number,
+        default: 1
+        },
+        dotOptions: { // 用来限制左边滑块最大值 和 右边滑块最小值
+        type: [Array, String],
+        default: () => [{
+            min: 0,
+            max: 100
+        }, {
+            min: 0,
+            max: 100
+        }]
+        }
+    },
+    watch:{
+    },
+    methods: {
+        sliderChange (value) { // 处理滑块移动
+           if(value[0] < 0) value[0] = 0
+           this.inputValueLeft = (value[0] * this.sliderMaxValue).toFixed(0)
+           this.inputValueRight = (value[1] * this.sliderMaxValue).toFixed(0)
+           this.$emit('onChange', [this.inputValueLeft,this.inputValueRight])
+        },
+        handleBlurLeft (value) { //  处理input输入
+            value = parseInt(value) ? parseInt(value) : 0
+            this.inputValueLeft = Math.min(Math.max(value,this.sliderMinValue),this.inputValueRight - this.minRange)
+            this.leftx = this.inputValueLeft / this.sliderMaxValue
+            this.$emit('onChange', [this.inputValueLeft,this.inputValueRight])
+        },
+        handleBlurRight (value) {
+            value = parseInt(value) ? parseInt(value) : parseInt(this.inputValueLeft) + this.minRange
+            this.inputValueRight = Math.max(Math.min(value,this.sliderMaxValue),parseInt(this.inputValueLeft) + this.minRange)
+            this.rightx = this.inputValueRight / this.sliderMaxValue
+            this.$emit('onChange', [this.inputValueLeft,this.inputValueRight])
+        },
+        leftMoveEnd (value) {
+            this.leftx = value
+        },
+        rightMoveEnd (value) {
+            this.rightx = value
+        }
+    }
+};
+</script>
+```
+### 组件使用：
+
+```javascript
+<template>
+  <div class="home">
+      <div class="left">
+        <double-calculate-slider 
+        :value="value" 
+        @onChange="onChange"
+        :title1="title1"
+        :title2="title2"
+        :sliderMaxValue="sliderMaxValue"
+        :sliderMinValue="sliderMinValue"
+        :minRange="minRange"
+        :dotOptions="dotOptions">
+        </double-calculate-slider>
+      </div>
+  </div>
+</template>
+
+<script>
+import DoubleCalculateSlider from '../../components/doubleCalculateSlider.vue'
+export default {
+  name: 'Page1Home',
+  components:{
+    DoubleCalculateSlider
+  },
+  data(){
+    return{
+     value:[0,18],
+     title1:"子女年龄",
+     title2:"预计进入大学年龄",
+     sliderMaxValue:25,
+     sliderMinValue:0,
+     minRange:1,
+     dotOptions: [{ 
+        min: 0,
+        max: 17
+      }, {
+        min: 0,
+        max: 25
+      }]
+    }
+  },
+  methods:{
+    onChange(e){
+      console.log(e)
+    }
+  }
+}
+</script>
+```
