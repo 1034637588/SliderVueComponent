@@ -138,7 +138,7 @@ export default {
 .warpper{
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
 }
