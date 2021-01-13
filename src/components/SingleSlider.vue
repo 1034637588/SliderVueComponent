@@ -1,6 +1,6 @@
 <template>
-<div class="warpper" :style="{height:`${lumpHeight}px`}">
-  <div class="slider-box" :style="{backgroundColor: rightColor,height:`${height}px`}" ref="sliderBox" @touchstart="handleTouch">
+<div class="warpper" :style="{height:`${lumpHeight}px`}"  @touchstart="handleTouch">
+  <div class="slider-box" :style="{backgroundColor: rightColor,height:`${height}px`}" ref="sliderBox">
     <div
       class="progress-left"
       :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`, transition:isClick ? transition : ''}"

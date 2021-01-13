@@ -5,7 +5,7 @@
       <h1>{{(150*value[1]).toFixed(0)}}</h1>
     </div>
     <div class="box">
-        <double-slider @leftMoveEnd="leftMoveEnd" @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
+        <double-slider :transitionTime="0.5" @leftMoveEnd="leftMoveEnd" @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
     </div>
     <div class="input">
       <h1>{{(150*value2).toFixed(0)}}</h1>
@@ -59,8 +59,8 @@ export default {
 <style lang="less" scoped>
  .home{
    background-color: darkgray;
-   width: 100%;
-   height: 100%;
+   width: 100vw;
+   height: 100vh;
    display: flex;
    flex-flow: column;
    align-items: center;
