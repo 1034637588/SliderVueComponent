@@ -1,14 +1,22 @@
 <template>
   <div class="home">
     <div class="input">
-      <input v-model="inputValue" @blur="handleBlur(inputValue)" type="number"/>
-      <h1>{{(150*value[1]).toFixed(0)}}</h1>
     </div>
     <div class="box">
-        <double-slider :transitionTime="0.5" @leftMoveEnd="leftMoveEnd" @onChange="onChange" :interval="1/150" :leftx="leftx" :rightx="rightx"/>
-    </div>
-    <div class="input">
-      <h1>{{(150*value2).toFixed(0)}}</h1>
+        <double-slider 
+        :transitionTime="0.5" 
+        @leftMoveEnd="leftMoveEnd" 
+        @onChange="onChange" 
+        :interval="1/150" 
+        :leftx="leftx" 
+        :rightx="rightx">
+        <template v-slot:lumpLeft>
+        <img class="image" src="@/assets/Controller_handle@3x.png" />
+        </template>
+        <template v-slot:lumpRight>
+          <img class="image" src="@/assets/Controller_handle@3x.png" />
+        </template>
+        </double-slider>
     </div>
     <div class="box">
         <single-slider @onChange="onChangeSingle"/>
@@ -56,22 +64,24 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
- .home{
-   background-color: darkgray;
-   width: 100vw;
-   height: 100vh;
-   display: flex;
-   flex-flow: column;
-   align-items: center;
-   justify-content: center;
- }
- .box,.input{
-   width: 60vw;
- }
- .input{
-   display: flex;
-   justify-content: space-between;
- }
+<style lang="less">
+.home{
+  width: 500px;
+  height: 500px;
+  background-color: #cccccc;
+  overflow: hidden;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.box{
+  height: 50px;
+  margin-top: 40px;
+}
+.image{
+  width: 30px;
+  height: 30px;
+}
 </style>
 

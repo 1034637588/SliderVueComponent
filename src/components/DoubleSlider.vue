@@ -3,11 +3,11 @@
   <div class="slider-box" :style="{backgroundColor: centerColor,height:`${height}px`}" ref="sliderBox">
     <div
       class="progress-left"
-      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 2}px`,backgroundColor:leftColor, height:`${height}px`,transition:isClick ? transition : ''}"
+      :style="{ width: `${!lumpLeftX ? lumpLeftX : totalWidth*plScale + 1}px`,backgroundColor:leftColor, height:`${height}px`,transition:isClick ? transition : ''}"
     ></div>
     <div
       class="progress-right"
-      :style="{ width: `${!lumpRightX ? lumpRightX : totalWidth*prScale + 2}px`, backgroundColor:rightColor, height:`${height}px`,transition:isClick ? transition : ''}"
+      :style="{ width: `${!lumpRightX ? lumpRightX : totalWidth*prScale + 1}px`, backgroundColor:rightColor, height:`${height}px`,transition:isClick ? transition : ''}"
     ></div>
     <div
       class="lump-left"
@@ -199,17 +199,12 @@ export default {
     handleLeftMove(e) {
       let { clientX } = e.changedTouches[0]
       let { startX, endX } = this.lumpLeft
-      if (
-        this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
-        clientX - startX > 0
-      ) {
+      if (this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth && clientX - startX > 0) {
         this.lumpLeftX = this.totalWidth + this.lumpRightX  - this.interval * this.totalWidth
+        this.plScale = this.lumpLeftX / this.totalWidth
         return;
       } //如果碰到右边滑块 就停下
-      this.lumpLeftX = Math.min(
-        Math.max(clientX - startX + endX, 0),
-        this.lumpLeftMax
-      ) // 实时改变滑块位置
+      this.lumpLeftX = Math.min(Math.max(clientX - startX + endX, 0),this.lumpLeftMax) // 实时改变滑块位置
       this.plScale = this.lumpLeftX / this.totalWidth
     },
     handleLeftend(e) {
@@ -223,17 +218,12 @@ export default {
     handleRightMove(e) {
       let { clientX } = e.changedTouches[0]
       let { startX, endX } = this.lumpRight
-      if (
-        this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth &&
-        clientX - startX < 0
-      ) {
+      if (this.lumpLeftX - this.lumpRightX >= this.totalWidth - this.interval * this.totalWidth && clientX - startX < 0) { //左移 如果碰到左边滑块 就停下
         this.lumpRightX = this.lumpLeftX - this.totalWidth + this.interval * this.totalWidth
+        this.prScale = -(this.lumpRightX / this.totalWidth).toFixed(3)
         return
-      } //如果碰到右边滑块 就停下
-      this.lumpRightX = Math.min(
-        0,
-        Math.max(clientX - startX + endX, -this.lumpRightMax) // 如果超过了左边界 就不能动了
-      )
+      } 
+      this.lumpRightX = Math.min(0, Math.max(clientX - startX + endX, -this.lumpRightMax))  // 如果超过了左边界 就不能动了
       this.prScale = -(this.lumpRightX / this.totalWidth).toFixed(3)
     },
     handleRightend(e) {
